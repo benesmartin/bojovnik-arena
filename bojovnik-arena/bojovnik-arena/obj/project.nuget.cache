@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "jK8IFBS+pNPY8gp6A2XakQBuCQxaC1I8K1Ux6m7yQzqKsAbJWVSYqYWOqxkQMPeNKMdM5B13251bm45XNSJk/Q==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Martin\\source\\repos\\bojovnik-arena\\bojovnik-arena\\bojovnik-arena.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Martin\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\5.0.12\\microsoft.netcore.app.host.win-x64.5.0.12.nupkg.sha512"
+  ],
+  "logs": []
+}
