@@ -8,7 +8,7 @@ namespace bojovnik_arena
 {
     public class Berserker : Bojovnik
     {
-        public Berserker(int hp, int dmg, int dodgechance, int blockchance) : base(hp, dmg, dodgechance, blockchance)
+        public Berserker(int hp, int dmg, int dodgechance, int blockchance, string name) : base(hp, dmg, dodgechance, blockchance, name)
         {
         }
     }

@@ -8,7 +8,7 @@ namespace bojovnik_arena
 {
     public class Mage : Bojovnik
     {
-        public Mage(int hp, int dmg, int dodgechance, int blockchance) : base(hp, dmg, dodgechance, blockchance)
+        public Mage(int hp, int dmg, int dodgechance, int blockchance, string name) : base(hp, dmg, dodgechance, blockchance, name)
         {
         }
     }
