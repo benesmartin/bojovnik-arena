@@ -16,9 +16,16 @@ namespace bojovnik_arena
             main = true;
             while (main)
             {
+                game = true;
                 Extensions.Shuffle(warriors);
                 PrintInfo();
                 PrintWarriors(warriors);
+                while (game)
+                {
+                    Game(warriors, winners, warriorsD);
+                    break;
+                }
+                
                 break;
             }
             
@@ -128,6 +135,56 @@ namespace bojovnik_arena
             Console.ResetColor();
             Console.Write(" - šance na dvojnásobný útok (Berserker)\n");
             Console.WriteLine("--------------------------------------------------");
+        }
+        public void Game(List<Bojovnik> warriors, List<Bojovnik> winners, List<Bojovnik> warriorsD)
+        {
+            Console.WriteLine("\nNásleduje: \n");
+            Console.WriteLine(warriors[0].Name + " vs " + warriors[1].Name);
+            Console.WriteLine("\nStiskni libovolnou klávesu pro pokračování...");
+            Console.Write("--------------------------------------------------\n");
+            Console.ReadLine();
+            var w0hp = warriors[0].HP;
+            var w1hp = warriors[1].HP;
+            while (warriors[0].isAlive() && warriors[1].isAlive())
+            {
+                Console.Clear();
+                Console.Write("\t\t[" + warriors[0].Name + " útočí]\n");
+                Console.Write("--------------------------------------------------\n");
+                warriors[0].Attack(warriors[1]);
+                Console.Write("--------------------------------------------------\n");
+                Console.WriteLine("HP " + warriors[0].Name + ": " + warriors[0].HP + " / " + w0hp);
+                Console.WriteLine("HP " + warriors[1].Name + ": " + warriors[1].HP + " / " + w1hp);
+                Console.Write("--------------------------------------------------");
+                Console.ReadLine();
+                if (warriors[1].isAlive())
+                {
+                    Console.Clear();
+                    Console.Write("\t\t[" + warriors[1].Name + " útočí]\n");
+                    Console.Write("--------------------------------------------------\n");
+                    warriors[1].Attack(warriors[0]);
+                    Console.Write("--------------------------------------------------\n");
+                    Console.WriteLine("HP " + warriors[0].Name + ": " + warriors[0].HP + " / " + w0hp);
+                    Console.WriteLine("HP " + warriors[1].Name + ": " + warriors[1].HP + " / " + w1hp);
+                    Console.Write("--------------------------------------------------");
+                    Console.ReadLine();
+                }
+            }
+            if (warriors[0].isAlive())
+            {
+                Console.WriteLine("Vítězem se stává " + warriors[0].Name + "!");
+                winners.Add(warriors[0]);
+                warriorsD.Add(warriors[1]);
+                warriorsD.Add(warriors[0]);
+            }
+            if (warriors[1].isAlive())
+            {
+                Console.WriteLine("Vítězem se stává " + warriors[1].Name + "!");
+                winners.Add(warriors[1]);
+                warriorsD.Add(warriors[1]);
+                warriorsD.Add(warriors[0]);
+            }
+            Console.Write("--------------------------------------------------");
+            Console.ReadLine();
         }
     }
 }
