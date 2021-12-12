@@ -12,20 +12,22 @@ namespace bojovnik_arena
         public int DMG { get; set; }
         public int DodgeChance { get; set; }
         public int BlockChance { get; set; }
+        public int DoubleAttackChance { get; set; }
         public string Name { get; set; }
-        protected Bojovnik(int hp, int dmg, int dodgechance, int blockchance, string name)
+        protected Bojovnik(int hp, int dmg, int dodgechance, int blockchance, int doubleattackchance, string name)
         {
             HP = hp;
             DMG = dmg;
             DodgeChance = dodgechance;
             BlockChance = blockchance;
+            DoubleAttackChance = doubleattackchance;
             Name = name;
         }
-        public int damageIncoming(int damage)
+        public virtual int damageIncoming(int damage)
         {
             return HP -= damage;
         }
-        public int Attack(Bojovnik bojovnik)
+        public virtual int Attack(Bojovnik bojovnik)
         {
             return bojovnik.damageIncoming(DMG);
         }
