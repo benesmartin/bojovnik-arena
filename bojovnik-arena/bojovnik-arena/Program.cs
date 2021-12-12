@@ -10,8 +10,24 @@ namespace bojovnik_arena
             Console.SetWindowSize(100, 50);
             Console.SetBufferSize(100, 50);
             Arena arena = new Arena();
-            arena.Turnaj(arena.CreateListOfWarriors());
-            Console.ReadLine();
+            bool volba = true;
+            while (volba)
+            {
+                arena.Turnaj(arena.CreateListOfWarriors());
+                Console.Write("--------------------------------------------------\n");
+                Console.Write("Pokud chceš hrát znovu, stiskni klávesu [y]\n> ");
+                char vol = Console.ReadKey().KeyChar;
+                if (vol == 'y')
+                {
+                    volba = true;
+                }
+                else
+                {
+                    Console.Write("\nTak zas příště!");
+                    Thread.Sleep(1000);
+                    volba = false;
+                }
+            }
         }
     }
 }
