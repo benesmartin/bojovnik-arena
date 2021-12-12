@@ -23,13 +23,22 @@ namespace bojovnik_arena
             DoubleAttackChance = doubleattackchance;
             Name = name;
         }
-        public virtual int damageIncoming(int damage)
+        public virtual void damageIncoming(int damage)
         {
-            return HP -= damage;
+            Console.Write(Name + " utrpěl poškození ");
+            Console.ForegroundColor = ConsoleColor.DarkCyan;
+            Console.Write(damage);
+            Console.ResetColor();
+            Console.Write("!\n");
+            HP -= damage;
+            if(HP <= 0)
+            {
+                Console.WriteLine(Name + " zemřel.");
+            } 
         }
-        public virtual int Attack(Bojovnik bojovnik)
+        public virtual void Attack(Bojovnik bojovnik)
         {
-            return bojovnik.damageIncoming(DMG);
+            bojovnik.damageIncoming(DMG);
         }
         public bool isAlive()
         {

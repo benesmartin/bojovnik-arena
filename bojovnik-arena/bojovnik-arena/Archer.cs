@@ -17,13 +17,30 @@ namespace bojovnik_arena
                 doubleattackchance = 0;
             dc = dodgechance;
         }
-        public override int damageIncoming(int damage)
+        public override void damageIncoming(int damage)
         {
             int chance = rng.Next(0, 101);
             if (chance <= dc)
-                return HP;
+            {
+                Console.ForegroundColor = ConsoleColor.DarkMagenta;
+                Console.WriteLine(Name + " se vyhnul útoku!");
+                Console.ResetColor();
+                HP = HP;
+            }
+
             else
-                return HP -= damage;
+            {
+                Console.Write(Name + " utrpěl poškození ");
+                Console.ForegroundColor = ConsoleColor.DarkCyan;
+                Console.Write(damage);
+                Console.ResetColor();
+                Console.Write("!\n");
+                HP -= damage;
+            }
+            if (HP <= 0)
+            {
+                Console.WriteLine(Name + " zemřel.");
+            }
         }
     }
 }

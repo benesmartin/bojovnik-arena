@@ -17,13 +17,19 @@ namespace bojovnik_arena
                 blockchance = 0;
             dac = doubleattackchance;
         }
-        public override int Attack(Bojovnik bojovnik)
+        public override void Attack(Bojovnik bojovnik)
         {
             int chance = rng.Next(0, 101);
             if (chance <= dac)
-                return bojovnik.damageIncoming(2 * DMG);
+            {
+                Console.ForegroundColor = ConsoleColor.DarkGreen;
+                Console.WriteLine(Name + " provedl svůj útok dvakrát!");
+                Console.ResetColor();
+                bojovnik.damageIncoming(2 * DMG);
+            }
+                
             else
-                return bojovnik.damageIncoming(DMG);
+                bojovnik.damageIncoming(DMG);
         }
     }
 }
