@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 
 namespace bojovnik_arena
 {
@@ -6,7 +7,11 @@ namespace bojovnik_arena
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Console.SetWindowSize(100, 50);
+            Console.SetBufferSize(100, 50);
+            Arena arena = new Arena();
+            arena.Turnaj(arena.CreateListOfWarriors());
+            Console.ReadLine();
         }
     }
 }
