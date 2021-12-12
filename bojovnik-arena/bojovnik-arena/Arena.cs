@@ -38,15 +38,15 @@ namespace bojovnik_arena
             while (true)
             {
                 Console.Clear();
-                Console.Write("Zadej sudý počet bojovníků v rozsahu od 2 do 10\n> ");
+                Console.Write("Vyber si počet bojovníků (2 - 4 - 8 - 16)\n> ");
                 Console.ForegroundColor = ConsoleColor.DarkCyan;
                 string pocet = Console.ReadLine();
                 Console.ResetColor();
                 pocetBoj = Convert.ToInt32(pocet);
-                if (pocetBoj >= 2 && pocetBoj <= 10 && pocetBoj % 2 == 0)
+                if (pocetBoj == 2 || pocetBoj == 4 || pocetBoj == 8 || pocetBoj == 16)
                     break;
             }
-            for (int i = 0; i<pocetBoj; i++)
+            for (int i = 0; i < pocetBoj; i++)
             {
                 var randomHP = rng.Next(50, 101);
                 var randomDMG = rng.Next(25, 51);
