@@ -16,9 +16,8 @@ namespace bojovnik_arena
             main = true;
             while (main)
             {
-                Console.Clear();
-                Console.Write("--------------------------------------------------\n");
                 Extensions.Shuffle(warriors);
+                PrintInfo();
                 PrintWarriors(warriors);
                 break;
             }
@@ -99,6 +98,36 @@ namespace bojovnik_arena
                 Console.WriteLine("\n");
             }
             Console.Write("--------------------------------------------------");
+        }
+        public void PrintInfo()
+        {
+            Console.Clear();
+            Console.WriteLine("--------------------------------------------------");
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.Write("HP");
+            Console.ResetColor();
+            Console.Write(" - životy");
+            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.Write("DMG");
+            Console.ResetColor();
+            Console.Write(" - síla útoku");
+            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            Console.Write("BC");
+            Console.ResetColor();
+            Console.Write(" - šance na zablokování útoku (Bojovník)");
+            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.DarkMagenta;
+            Console.Write("DC");
+            Console.ResetColor();
+            Console.Write(" - šance na vyhnutí se útoku (Lukostřelec)");
+            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.Write("DAC");
+            Console.ResetColor();
+            Console.Write(" - šance na dvojnásobný útok (Berserker)\n");
+            Console.WriteLine("--------------------------------------------------");
         }
     }
 }
