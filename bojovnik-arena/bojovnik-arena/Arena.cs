@@ -22,11 +22,22 @@ namespace bojovnik_arena
                 PrintWarriors(warriors);
                 while (game)
                 {
-                    Game(warriors, winners, warriorsD);
-                    break;
+                    if (warriors.Count == 0)
+                    {
+                        foreach (var item in winners)
+                        {
+                            warriors.Add(item);
+                        }
+                        winners.Clear();
+                        game = false;
+                    }
+                    else if (warriors.Count >= 2)
+                    {
+                        Game(warriors, winners, warriorsD);
+                        Remove(warriors, warriorsD);
+                        game = false;
+                    }
                 }
-                
-                break;
             }
             
         }
@@ -185,6 +196,13 @@ namespace bojovnik_arena
             }
             Console.Write("--------------------------------------------------");
             Console.ReadLine();
+        }
+        public void Remove(List<Bojovnik> warriors, List<Bojovnik> warriorsD)
+        {
+            foreach (var item in warriorsD)
+            {
+                warriors.Remove(item);
+            }
         }
     }
 }
