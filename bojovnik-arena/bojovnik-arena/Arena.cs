@@ -8,13 +8,21 @@ namespace bojovnik_arena
 {
     public class Arena
     {
-        private int pocetBoj; private static Random rng = new Random(); private Bojovnik bojovnik;
+        private int pocetBoj; private static Random rng = new Random(); private Bojovnik bojovnik; bool game, main;
         public void Turnaj(List<Bojovnik> warriors)
         {
-            Console.Clear();
-            Console.WriteLine("-------------------------------------\n");
-            Extensions.Shuffle(warriors);
-            PrintWarriors(warriors);
+            List<Bojovnik> winners = new();
+            List<Bojovnik> warriorsD = new();
+            main = true;
+            while (main)
+            {
+                Console.Clear();
+                Console.Write("--------------------------------------------------\n");
+                Extensions.Shuffle(warriors);
+                PrintWarriors(warriors);
+                break;
+            }
+            
         }
         public List<Bojovnik> CreateListOfWarriors()
         {
