@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace bojovnik_arena
@@ -10,50 +11,48 @@ namespace bojovnik_arena
     {
         private int pocetBoj; private static Random rng = new Random(); private Bojovnik bojovnik; bool game, main;
         public void Turnaj(List<Bojovnik> warriors)
-        {
+        {           
             DateTime dateTime = DateTime.UtcNow.Date;
             List<Bojovnik> winners = new();
             List<Bojovnik> warriorsD = new();
             main = true;
+            Extensions.Shuffle(warriors);
             while (main)
-            {
+            {      
                 game = true;
-                Extensions.Shuffle(warriors);
                 PrintInfo();
                 PrintWarriors(warriors);
-                if (warriors.Count == 1)
-                {
-                    Console.Clear();
-                    Console.ForegroundColor = ConsoleColor.DarkYellow;
-                    Console.Write(warriors[0].Name);
-                    Console.ResetColor();
-                    Console.Write(" je vítězem turnaje ze dne ");
-                    Console.ForegroundColor = ConsoleColor.DarkCyan;
-                    Console.Write(dateTime.ToString("dd/MM/yyyy"));
-                    Console.ResetColor();
-                    Console.WriteLine("!");
-                    break;
-                }
+                if(winners.Count != 0)
+                    PrintWarriors(winners);              
                 while (game)
                 {
-                    if (warriors.Count == 0)
+                    if (warriors.Count == 1)
                     {
-                        foreach (var item in winners)
-                        {
-                            warriors.Add(item);
-                        }
+                        Console.Clear();
+                        Console.ForegroundColor = ConsoleColor.DarkYellow;
+                        Console.Write(warriors[0].Name);
+                        Console.ResetColor();
+                        Console.Write(" je vítězem turnaje ze dne ");
+                        Console.ForegroundColor = ConsoleColor.DarkCyan;
+                        Console.Write(dateTime.ToString("dd/MM/yyyy"));
+                        Console.ResetColor();
+                        Console.WriteLine("!");
+                        main = false;
+                        game = false;
+                    }
+                    else if (warriors.Count == 0)
+                    {
+                        warriors = winners.ToList();
                         winners.Clear();
                         game = false;
                     }
                     else if (warriors.Count >= 2)
                     {
                         Game(warriors, winners, warriorsD);
-                        Remove(warriors, warriorsD);
                         game = false;
                     }
                 }
             }
-            
         }
         public List<Bojovnik> CreateListOfWarriors()
         {
@@ -89,6 +88,7 @@ namespace bojovnik_arena
         }
         public void PrintWarriors(List<Bojovnik> warriors)
         {
+            Console.WriteLine("--------------------------------------------------");
             for (int i = 0; i < warriors.Count(); i++)
             {
                 Console.ForegroundColor = ConsoleColor.DarkCyan;
@@ -127,9 +127,8 @@ namespace bojovnik_arena
                     Console.ResetColor();
                 }
 
-                Console.WriteLine("\n");
+                Console.Write("\n");
             }
-            Console.Write("--------------------------------------------------");
         }
         public void PrintInfo()
         {
@@ -159,10 +158,10 @@ namespace bojovnik_arena
             Console.Write("DAC");
             Console.ResetColor();
             Console.Write(" - šance na dvojnásobný útok (Berserker)\n");
-            Console.WriteLine("--------------------------------------------------");
         }
         public void Game(List<Bojovnik> warriors, List<Bojovnik> winners, List<Bojovnik> warriorsD)
         {
+            Console.Write("--------------------------------------------------");
             Console.WriteLine("\nNásleduje: \n");
             Console.WriteLine(warriors[0].Name + " vs " + warriors[1].Name);
             Console.WriteLine("\nStiskni libovolnou klávesu pro pokračování...");
@@ -178,9 +177,13 @@ namespace bojovnik_arena
                 warriors[0].Attack(warriors[1]);
                 Console.Write("--------------------------------------------------\n");
                 Console.WriteLine("HP " + warriors[0].Name + ": " + warriors[0].HP + " / " + w0hp);
-                Console.WriteLine("HP " + warriors[1].Name + ": " + warriors[1].HP + " / " + w1hp);
-                Console.Write("--------------------------------------------------");
-                Console.ReadLine();
+                Console.Write("HP " + warriors[1].Name + ": ");
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.Write(warriors[1].HP);
+                Console.ResetColor();
+                Console.WriteLine(" / " + w1hp);
+                Console.WriteLine("--------------------------------------------------");
+                Thread.Sleep(1000);   
                 if (warriors[1].isAlive())
                 {
                     Console.Clear();
@@ -188,35 +191,39 @@ namespace bojovnik_arena
                     Console.Write("--------------------------------------------------\n");
                     warriors[1].Attack(warriors[0]);
                     Console.Write("--------------------------------------------------\n");
-                    Console.WriteLine("HP " + warriors[0].Name + ": " + warriors[0].HP + " / " + w0hp);
+                    Console.Write("HP " + warriors[0].Name + ": ");
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
+                    Console.Write(warriors[0].HP);
+                    Console.ResetColor();
+                    Console.WriteLine(" / " + w0hp);
                     Console.WriteLine("HP " + warriors[1].Name + ": " + warriors[1].HP + " / " + w1hp);
-                    Console.Write("--------------------------------------------------");
-                    Console.ReadLine();
+                    Console.WriteLine("--------------------------------------------------");
+                    Thread.Sleep(1000);
                 }
             }
             if (warriors[0].isAlive())
             {
+                warriors[0].HP = w0hp;
                 Console.WriteLine("Vítězem se stává " + warriors[0].Name + "!");
                 winners.Add(warriors[0]);
-                warriorsD.Add(warriors[1]);
                 warriorsD.Add(warriors[0]);
+                warriorsD.Add(warriors[1]);
             }
-            if (warriors[1].isAlive())
+            else if (warriors[1].isAlive())
             {
+                warriors[1].HP = w1hp;
                 Console.WriteLine("Vítězem se stává " + warriors[1].Name + "!");
                 winners.Add(warriors[1]);
-                warriorsD.Add(warriors[1]);
                 warriorsD.Add(warriors[0]);
+                warriorsD.Add(warriors[1]);
             }
-            Console.Write("--------------------------------------------------");
-            Console.ReadLine();
-        }
-        public void Remove(List<Bojovnik> warriors, List<Bojovnik> warriorsD)
-        {
             foreach (var item in warriorsD)
             {
                 warriors.Remove(item);
             }
+            warriorsD.Clear();
+            Console.Write("--------------------------------------------------");          
+            Console.ReadLine();
         }
     }
 }
