@@ -11,6 +11,7 @@ namespace bojovnik_arena
         private int pocetBoj; private static Random rng = new Random(); private Bojovnik bojovnik; bool game, main;
         public void Turnaj(List<Bojovnik> warriors)
         {
+            DateTime dateTime = DateTime.UtcNow.Date;
             List<Bojovnik> winners = new();
             List<Bojovnik> warriorsD = new();
             main = true;
@@ -20,6 +21,19 @@ namespace bojovnik_arena
                 Extensions.Shuffle(warriors);
                 PrintInfo();
                 PrintWarriors(warriors);
+                if (warriors.Count == 1)
+                {
+                    Console.Clear();
+                    Console.ForegroundColor = ConsoleColor.DarkYellow;
+                    Console.Write(warriors[0].Name);
+                    Console.ResetColor();
+                    Console.Write(" je vítězem turnaje ze dne ");
+                    Console.ForegroundColor = ConsoleColor.DarkCyan;
+                    Console.Write(dateTime.ToString("dd/MM/yyyy"));
+                    Console.ResetColor();
+                    Console.WriteLine("!");
+                    break;
+                }
                 while (game)
                 {
                     if (warriors.Count == 0)
