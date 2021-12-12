@@ -14,23 +14,7 @@ namespace bojovnik_arena
             Console.Clear();
             Console.WriteLine("-------------------------------------\n");
             Extensions.Shuffle(warriors);
-            var warriorsCount = warriors.Count();           
-            for (int i = 0; i < warriorsCount; i++)
-            {
-                Console.ForegroundColor = ConsoleColor.DarkGreen;
-                Console.Write(i+1);
-                Console.ResetColor();
-                Console.Write(". " + warriors[i].Name + " -> HP: ");
-                Console.ForegroundColor = ConsoleColor.DarkRed;
-                Console.Write(warriors[i].HP);
-                Console.ResetColor();
-                Console.Write(" DMG: ");
-                Console.ForegroundColor = ConsoleColor.DarkYellow;
-                Console.Write(warriors[i].DMG);
-                Console.ResetColor();
-                Console.WriteLine("\n");
-            }
-            Console.Write("-------------------------------------");
+            PrintWarriors(warriors);
         }
         public List<Bojovnik> CreateListOfWarriors()
         {
@@ -63,6 +47,50 @@ namespace bojovnik_arena
                 bojovnici.Add(bojovnik);
             }
             return bojovnici;
+        }
+        public void PrintWarriors(List<Bojovnik> warriors)
+        {
+            for (int i = 0; i < warriors.Count(); i++)
+            {
+                Console.ForegroundColor = ConsoleColor.DarkCyan;
+                Console.Write(i + 1);
+                Console.ResetColor();
+                Console.Write(". " + warriors[i].Name + " -> HP: ");
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.Write(warriors[i].HP);
+                Console.ResetColor();
+                Console.Write(" DMG: ");
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                Console.Write(warriors[i].DMG);
+                Console.ResetColor();
+
+                if (warriors[i] is Warrior)
+                {
+                    Console.Write(" BC: ");
+                    Console.ForegroundColor = ConsoleColor.DarkGray;
+                    Console.Write(warriors[i].BlockChance);
+                    Console.ResetColor();
+                }
+
+                if (warriors[i] is Archer)
+                {
+                    Console.Write(" DC: ");
+                    Console.ForegroundColor = ConsoleColor.DarkMagenta;
+                    Console.Write(warriors[i].DodgeChance);
+                    Console.ResetColor();
+                }
+
+                if (warriors[i] is Berserker)
+                {
+                    Console.Write(" DAC: ");
+                    Console.ForegroundColor = ConsoleColor.DarkGreen;
+                    Console.Write(warriors[i].DoubleAttackChance);
+                    Console.ResetColor();
+                }
+
+                Console.WriteLine("\n");
+            }
+            Console.Write("--------------------------------------------------");
         }
     }
 }
