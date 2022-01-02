@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -10,8 +11,11 @@ namespace bojovnik_arena
     public class Arena
     {
         private int pocetBoj; private static Random rng = new Random(); private Bojovnik bojovnik; bool game, main;
+        private static string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop); //zjisti cestu na plochu
+        private static string filepath = path + "\\bojovnik-arena.txt"; //prida do cesty nazev textoveho souboru
         public void Turnaj(List<Bojovnik> warriors)
-        {           
+        {
+            File.WriteAllText(filepath, "--------------------------ARENA-------------------------\n");
             DateTime dateTime = DateTime.UtcNow.Date;
             List<Bojovnik> winners = new();
             List<Bojovnik> warriorsD = new();
@@ -37,6 +41,10 @@ namespace bojovnik_arena
                         Console.Write(dateTime.ToString("dd/MM/yyyy"));
                         Console.ResetColor();
                         Console.WriteLine("!");
+                            File.AppendAllText(filepath, warriors[0].Name);
+                            File.AppendAllText(filepath, " je vítězem turnaje ze dne ");
+                            File.AppendAllText(filepath, dateTime.ToString("dd/MM/yyyy"));
+                            File.AppendAllText(filepath, "!");
                         main = false;
                         game = false;
                     }
@@ -44,6 +52,7 @@ namespace bojovnik_arena
                     {
                         warriors = winners.ToList();
                         winners.Clear();
+                        File.AppendAllText(filepath, "--------------------------------------------------------\n");
                         game = false;
                     }
                     else if (warriors.Count >= 2)
@@ -166,6 +175,7 @@ namespace bojovnik_arena
             Console.WriteLine(warriors[0].Name + " vs " + warriors[1].Name);
             Console.WriteLine("\nStiskni libovolnou klávesu pro pokračování...");
             Console.Write("--------------------------------------------------\n");
+                File.AppendAllText(filepath, warriors[0].Name + " vs " + warriors[1].Name);
             Console.ReadLine();
             var w0hp = warriors[0].HP;
             var w1hp = warriors[1].HP;
@@ -205,6 +215,7 @@ namespace bojovnik_arena
             {
                 warriors[0].HP = w0hp;
                 Console.WriteLine("Vítězem se stává " + warriors[0].Name + "!");
+                    File.AppendAllText(filepath, " -> " + warriors[0].Name + "\n");
                 winners.Add(warriors[0]);
                 warriorsD.Add(warriors[0]);
                 warriorsD.Add(warriors[1]);
@@ -213,6 +224,7 @@ namespace bojovnik_arena
             {
                 warriors[1].HP = w1hp;
                 Console.WriteLine("Vítězem se stává " + warriors[1].Name + "!");
+                    File.AppendAllText(filepath, " -> " + warriors[1].Name + "\n");
                 winners.Add(warriors[1]);
                 warriorsD.Add(warriors[0]);
                 warriorsD.Add(warriors[1]);
