@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading;
 
 namespace bojovnik_arena
@@ -14,7 +15,15 @@ namespace bojovnik_arena
             while (volba)
             {
                 arena.Turnaj(arena.CreateListOfWarriors());
-                Console.Write("--------------------------------------------------\n");
+                Console.Write("----------------------------------------------------\n");
+                Console.Write("To byla ale hra!\n");
+                Console.Write("Přeješ si otevřít textový soubor s podrobnostmi? [y]\n> ");
+                char vo = Console.ReadKey().KeyChar;
+                if (vo == 'y')
+                {
+                    Process.Start("notepad.exe", Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\bojovnik-arena.txt");
+                }
+                Console.Write("\n----------------------------------------------------\n");
                 Console.Write("Pokud chceš hrát znovu, stiskni klávesu [y]\n> ");
                 char vol = Console.ReadKey().KeyChar;
                 if (vol == 'y')
